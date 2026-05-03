@@ -5,27 +5,29 @@
 </head>
 <body>
 
-<h2 th:text="${todo.id == null ? 'Thêm Task' : 'Cập nhật Task'}"></h2>
+<a href="?lang=vi">VI</a> |
+<a href="?lang=en">EN</a>
+
+<h2 th:text="${todo.id == null ? #messages.msgOrNull('add.new') : #messages.msgOrNull('edit')}"></h2>
 
 <form th:action="@{/todos/save}" th:object="${todo}" method="post">
 
-    <!-- BẮT BUỘC -->
     <input type="hidden" th:field="*{id}">
 
     <div>
-        Nội dung:
+        <label th:text="#{content}"></label>
         <input type="text" th:field="*{content}">
         <span style="color:red" th:errors="*{content}"></span>
     </div>
 
     <div>
-        Hạn:
+        <label th:text="#{dueDate}"></label>
         <input type="date" th:field="*{dueDate}">
         <span style="color:red" th:errors="*{dueDate}"></span>
     </div>
 
     <div>
-        Trạng thái:
+        <label th:text="#{status}"></label>
         <select th:field="*{status}">
             <option value="Pending">Pending</option>
             <option value="Done">Done</option>
@@ -33,7 +35,7 @@
     </div>
 
     <div>
-        Ưu tiên:
+        <label th:text="#{priority}"></label>
         <select th:field="*{priority}">
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
@@ -41,7 +43,8 @@
         </select>
     </div>
 
-    <button type="submit">Lưu</button>
+    <button type="submit" th:text="#{save}"></button>
+
 </form>
 
 </body>

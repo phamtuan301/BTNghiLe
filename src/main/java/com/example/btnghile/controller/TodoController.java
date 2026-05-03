@@ -2,6 +2,7 @@ package com.example.btnghile.controller;
 
 import com.example.btnghile.entity.Todo;
 import com.example.btnghile.repository.TodoRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +22,16 @@ public class TodoController {
 
 
     @GetMapping
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
+        String owner = (String) session.getAttribute("owner");
+
+        if (owner == null || owner.isBlank()) {
+            return "redirect:/todos/owner";
+        }
+
+        model.addAttribute("owner", owner);
         model.addAttribute("todos", todoRepository.findAll());
+
         return "index";
     }
 
@@ -88,6 +97,19 @@ public class TodoController {
 
         redirectAttributes.addFlashAttribute("message", "Xóa task thành công!");
 
+        return "redirect:/todos";
+    }
+    @GetMapping("/owner")
+    public String showOwnerForm() {
+        return "owner-form";
+    }
+
+    @PostMapping("/owner")
+    public String saveOwner(
+            @RequestParam String owner,
+            HttpSession session
+    ) {
+        session.setAttribute("owner", owner);
         return "redirect:/todos";
     }
 }

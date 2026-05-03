@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Todo List</title>
+    <title th:text="#{title.todo}">Todo List</title>
 </head>
 <body>
 
-<h2>Danh sách Task</h2>
+<h2 th:text="#{title.todo}"></h2>
+
+<p>
+    <span th:text="#{owner.label}"></span>
+    <b th:text="${owner}"></b>
+</p>
+
+<a href="?lang=vi">VI</a> |
+<a href="?lang=en">EN</a>
 
 <div th:if="${message}" style="color: green">
     <p th:text="${message}"></p>
 </div>
 
-<a th:href="@{/todos/create}">+ Thêm mới</a>
+<br><br>
+
+<a th:href="@{/todos/create}" th:text="#{add.new}"></a>
 
 <table border="1" cellpadding="10">
     <tr>
         <th>ID</th>
-        <th>Nội dung</th>
-        <th>Hạn</th>
-        <th>Trạng thái</th>
-        <th>Ưu tiên</th>
-        <th>Hành động</th>
+        <th th:text="#{content}"></th>
+        <th th:text="#{dueDate}"></th>
+        <th th:text="#{status}"></th>
+        <th th:text="#{priority}"></th>
+        <th th:text="#{action}"></th>
     </tr>
 
     <tr th:each="todo : ${todos}">
@@ -30,11 +40,13 @@
         <td th:text="${todo.status}"></td>
         <td th:text="${todo.priority}"></td>
         <td>
-            <a th:href="@{/todos/edit/{id}(id=${todo.id})}">Sửa</a>
+            <a th:href="@{/todos/edit/{id}(id=${todo.id})}"
+               th:text="#{edit}">
+            </a>
 
             <a th:href="@{/todos/delete/{id}(id=${todo.id})}"
-               onclick="return confirm('Bạn chắc chắn muốn xóa?')">
-                Xóa
+               th:onclick="'return confirm(\'' + #{confirm.delete} + '\')'"
+               th:text="#{delete}">
             </a>
         </td>
     </tr>

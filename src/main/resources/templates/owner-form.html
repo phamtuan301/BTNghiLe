@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nhập Chủ Sở Hữu</title>
+</head>
+<body>
+
+<h2>Nhập tên chủ sở hữu</h2>
+
+<form th:action="@{/todos/owner}" method="post">
+    <input type="text" name="owner" required>
+    <button type="submit">Bắt đầu</button>
+</form>
+
+</body>
+</html>
